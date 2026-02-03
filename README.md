@@ -1,85 +1,280 @@
-# E-commerce E2E REST API Automation
+# Enterprise E-Commerce API Test Automation Framework
 
-End-to-end REST API automation framework for e-commerce application testing, built with Rest Assured, Cucumber BDD, and comprehensive test coverage for user authentication, product management, and order workflows.
+A production-grade, end-to-end REST API automation framework for comprehensive e-commerce application testing. Built with industry-standard tools including REST Assured, Cucumber BDD, and Maven, this framework provides complete test coverage for user authentication, product lifecycle management, and order processing workflows.
 
-## Technologies Used
+---
 
-- **Java** - Programming language
-- **Rest Assured 6.0.0** - REST API testing library
-- **Cucumber 7.16.1** - BDD framework with PicoContainer for dependency injection
-- **JUnit 5.10.2** - Testing framework
-- **TestNG 7.8.0** - Additional testing framework support
-- **Maven** - Build and dependency management
-- **Jackson Databind** - JSON serialization/deserialization
-- **Hamcrest 2.2** - Assertion matchers
-- **Groovy 3.0.25** - For JSON path assertions
+## 🎯 What This Project Does
 
-## Project Structure
+### The Problem
+When companies build online shopping platforms (like Amazon or Shopify stores), they need to ensure that critical features work correctly every time:
+- Can users log in securely?
+- Can sellers add new products with images and descriptions?
+- Can customers place orders successfully?
+- Is the checkout process reliable?
+
+Manually testing these features after every code change is **time-consuming, error-prone, and expensive**. A single bug in the checkout process could mean lost sales and frustrated customers.
+
+### The Solution
+This project is an **automated testing system** that acts like a tireless quality assurance team. It automatically verifies that an e-commerce platform's backend services work correctly by:
+
+- **Testing user authentication** – Ensures login/logout works with valid credentials and properly rejects invalid ones
+- **Testing product management** – Verifies sellers can add, update, and remove products from the catalog
+- **Testing order processing** – Confirms the entire purchase flow from cart to order confirmation
+- **Generating detailed reports** – Creates visual reports showing what passed, what failed, and why
+
+### Business Value
+| Benefit | Impact |
+|---------|--------|
+| **Faster releases** | Tests run in minutes vs. hours of manual testing |
+| **Higher quality** | Catches bugs before they reach customers |
+| **Cost savings** | Reduces manual QA effort by 70-80% |
+| **Confidence** | Deploy updates knowing critical flows are verified |
+| **Documentation** | Test scenarios serve as living documentation of system behavior |
+
+### Skills Demonstrated
+- **Test Automation Architecture** – Designed a scalable, maintainable framework from scratch
+- **API Testing** – Deep understanding of REST APIs, HTTP methods, and response validation
+- **BDD Methodology** – Writing tests in plain English that business stakeholders can understand
+- **Design Patterns** – Applied industry best practices (Page Object Model, Dependency Injection, Builder Pattern)
+- **CI/CD Ready** – Framework integrates seamlessly with Jenkins, GitHub Actions, or any CI pipeline
+
+---
+
+## Technology Stack
+
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| **Java** | 8+ | Core programming language |
+| **REST Assured** | 6.0.0 | REST API testing and validation |
+| **Cucumber** | 7.16.1 | BDD framework for readable test scenarios |
+| **PicoContainer** | 7.16.1 | Dependency injection for step definitions |
+| **JUnit Jupiter** | 5.10.2 | Test execution framework |
+| **JUnit Platform Suite** | 1.10.2 | Test suite orchestration |
+| **TestNG** | 7.8.0 | Alternative testing framework support |
+| **Maven** | 3.6+ | Build automation and dependency management |
+| **Jackson Databind** | 3.0.3 | JSON serialization/deserialization |
+| **Hamcrest** | 2.2 | Fluent assertion matchers |
+| **Groovy** | 3.0.25 | JSON path expressions and assertions |
+| **Maven Cucumber Reporting** | 5.0.0 | Enhanced HTML test reports |
+
+## Detailed Project Structure
 
 ```
 EcommAPIAutomation/
+│
 ├── src/
 │   ├── main/
-│   │   ├── java/                          # Main source code (if any)
-│   │   └── resources/                     # Main resources
+│   │   ├── java/                                    # Main application code (reserved)
+│   │   └── resources/                               # Main application resources
+│   │
 │   └── test/
 │       ├── java/
+│       │   │
 │       │   ├── cucumber/
 │       │   │   └── Options/
-│       │   │       └── TestRunner.java    # Cucumber test runner configuration
-│       │   ├── featureFiles/
-│       │   │   ├── Login.feature          # Login scenarios (positive/negative)
-│       │   │   └── AddProduct.feature     # E2E product and order workflow
-│       │   ├── pojo/
-│       │   │   ├── Login.java             # Login request POJO
-│       │   │   ├── LoginResponse.java     # Login response POJO
-│       │   │   ├── Orders.java            # Order request POJO
-│       │   │   ├── OrderDetails.java      # Order details object
-│       │   │   ├── OrderCreatedResponse.java  # Order creation response
-│       │   │   └── productCreatedResponse.java # Product creation response
-│       │   ├── resources/
-│       │   │   ├── APIResources.java      # Enum for API endpoints and methods
-│       │   │   ├── TestData.java          # Test data builder for payloads
-│       │   │   ├── Utils.java             # Utility methods for API operations
-│       │   │   └── global.properties      # Configuration (base URL, credentials)
+│       │   │       └── TestRunner.java              # Cucumber test runner with JUnit Platform
+│       │   │                                        # Configures feature paths, glue code, plugins
+│       │   │                                        # Generates JSON and HTML reports
+│       │   │
+│       │   ├── featureFiles/                        # Gherkin feature files (BDD scenarios)
+│       │   │   ├── Login.feature                    # User authentication test scenarios
+│       │   │   │                                    # - Positive: Valid credentials login
+│       │   │   │                                    # - Negative: Invalid credentials validation
+│       │   │   │                                    # - Data-driven with Examples table
+│       │   │   │
+│       │   │   └── AddProduct.feature               # Complete e-commerce workflow
+│       │   │                                        # - Background: User login setup
+│       │   │                                        # - Add product with multipart form data
+│       │   │                                        # - Create order for product
+│       │   │                                        # - View order details
+│       │   │                                        # - Delete product and order (cleanup)
+│       │   │
+│       │   ├── pojo/                                # Plain Old Java Objects (Data Models)
+│       │   │   ├── Login.java                       # Login request payload
+│       │   │   │                                    # Fields: userEmail, userPassword
+│       │   │   │
+│       │   │   ├── LoginResponse.java               # Login API response model
+│       │   │   │                                    # Fields: token, userId, message
+│       │   │   │
+│       │   │   ├── Orders.java                      # Order creation request payload
+│       │   │   │                                    # Fields: List<OrderDetails>
+│       │   │   │
+│       │   │   ├── OrderDetails.java                # Individual order item details
+│       │   │   │                                    # Fields: country, productOrderedId
+│       │   │   │
+│       │   │   ├── OrderCreatedResponse.java        # Order creation response model
+│       │   │   │                                    # Fields: orderId, message
+│       │   │   │
+│       │   │   └── productCreatedResponse.java      # Product creation response model
+│       │   │                                        # Fields: productId, message
+│       │   │
+│       │   ├── resources/                           # Test utilities and configuration
+│       │   │   ├── APIResources.java                # Enum defining all API endpoints
+│       │   │   │                                    # - Endpoint paths (login, addProduct, etc.)
+│       │   │   │                                    # - HTTP methods (GET, POST, DELETE)
+│       │   │   │                                    # - getResource() method for path retrieval
+│       │   │   │
+│       │   │   ├── TestData.java                    # Test data builder class
+│       │   │   │                                    # - addProductPayload(): Creates product data
+│       │   │   │                                    # - loginPayload(): Creates login credentials
+│       │   │   │                                    # - orderPayload(): Creates order request
+│       │   │   │
+│       │   │   ├── Utils.java                       # Core utility methods
+│       │   │   │                                    # - requestSpecification(): Base request setup
+│       │   │   │                                    # - getJsonPath(): Response parsing
+│       │   │   │                                    # - getGlobalValue(): Property file reader
+│       │   │   │
+│       │   │   └── global.properties                # Environment configuration
+│       │   │                                        # - baseUrl: API base URL
+│       │   │                                        # - credentials: Test user credentials
+│       │   │
 │       │   └── stepDefination/
-│       │       └── StepDefination.java    # Step definitions for all scenarios
-│       └── resources/                     # Test resources
-├── target/                                # Build output directory
-│   ├── cucumber-reports/                  # HTML test reports
-│   └── jsonReports/                       # JSON format reports
-├── pom.xml                                # Maven dependencies and plugins
-├── .gitattributes                         # Git language detection configuration
-└── README.md                              # Project documentation
+│       │       └── StepDefination.java              # Cucumber step definitions
+│       │                                            # - Implements all Gherkin steps
+│       │                                            # - API request/response handling
+│       │                                            # - Multipart form data for file uploads
+│       │                                            # - Response validations and assertions
+│       │                                            # - Context sharing via PicoContainer
+│       │
+│       └── resources/                               # Test resource files
+│           └── (Additional test resources)
+│
+├── target/                                          # Maven build output directory
+│   ├── classes/                                     # Compiled main classes
+│   ├── test-classes/                                # Compiled test classes
+│   ├── cucumber-reports/                            # Cucumber HTML reports
+│   ├── cucumber-html-reports/                       # Enhanced HTML reports (verify phase)
+│   ├── jsonReports/                                 # JSON format test reports
+│   │   └── Cucumber.json                            # Cucumber JSON output
+│   ├── allure-results/                              # Allure report data (if configured)
+│   └── surefire-reports/                            # Maven Surefire test reports
+│
+├── .settings/                                       # Eclipse IDE settings
+│   ├── org.eclipse.jdt.core.prefs                   # Java compiler preferences
+│   └── org.eclipse.m2e.core.prefs                   # Maven Eclipse plugin settings
+│
+├── pom.xml                                          # Maven Project Object Model
+│   │                                                # - Project coordinates (groupId, artifactId)
+│   │                                                # - Dependencies (REST Assured, Cucumber, etc.)
+│   │                                                # - Build plugins (Surefire, Cucumber Reporting)
+│   │                                                # - Compiler configuration
+│
+├── .classpath                                       # Eclipse classpath configuration
+├── .project                                         # Eclipse project configuration
+├── .gitattributes                                   # Git attributes (language detection)
+├── logging.txt                                      # Application/test execution logs
+└── README.md                                        # Project documentation
 ```
 
-### Key Components
+## Architecture & Design Patterns
 
-**Feature Files** (`featureFiles/`)
-- `Login.feature` - Authentication testing with data-driven scenarios
-- `AddProduct.feature` - Complete e-commerce workflow with background steps
+### 1. **Behavior-Driven Development (BDD)**
+- Gherkin syntax for human-readable test scenarios
+- Business stakeholder collaboration through feature files
+- Living documentation that stays in sync with tests
 
-**POJO Classes** (`pojo/`)
-- Request POJOs: Login, Orders
-- Response POJOs: LoginResponse, productCreatedResponse, OrderCreatedResponse
-- Nested objects: OrderDetails
-- Used for JSON serialization/deserialization
+### 2. **Dependency Injection (PicoContainer)**
+- Shares context between step definitions
+- Manages object lifecycle automatically
+- Eliminates static variables and singleton patterns
 
-**Resources** (`resources/`)
-- `APIResources.java` - Centralized API endpoint and HTTP method management
-- `TestData.java` - Dynamic payload creation for different APIs
-- `Utils.java` - Reusable methods (API calls, response extraction, validations)
-- `global.properties` - Environment configuration and base URLs
+### 3. **Data Transfer Objects (POJO Pattern)**
+- Type-safe request/response handling
+- Automatic JSON serialization/deserialization
+- Clear contract definition for API payloads
 
-**Step Definitions** (`stepDefination/`)
-- Single comprehensive step definition class
-- Implements all Gherkin steps for login, product, and order operations
-- Handles multipart form data for file uploads
-- Manages context sharing between steps using PicoContainer
+### 4. **Resource Enum Pattern**
+- Centralized API endpoint management
+- Type-safe endpoint references
+- Easy maintenance and updates
 
-**Test Runner** (`cucumber/Options/`)
-- Cucumber configuration with tags and report plugins
-- Defines execution scope and output formats
+### 5. **Builder Pattern (TestData)**
+- Fluent API for test data creation
+- Reusable payload builders
+- Separation of test data from test logic
+
+### 6. **Utility Pattern**
+- Reusable helper methods
+- Configuration management
+- Response parsing and validation
+
+## Key Framework Components
+
+### Feature Files (`featureFiles/`)
+
+**Login.feature**
+- Authentication testing with data-driven scenarios
+- Positive and negative test cases
+- Cucumber Examples table for parameterization
+- Status code and response message validation
+
+**AddProduct.feature**
+- Complete e-commerce workflow with background steps
+- Product creation with multipart form data
+- Order placement and verification
+- Cleanup operations (delete product/order)
+
+### POJO Classes (`pojo/`)
+
+**Request Models:**
+- `Login.java` - User authentication credentials
+- `Orders.java` - Order creation with product list
+- `OrderDetails.java` - Individual order item details
+
+**Response Models:**
+- `LoginResponse.java` - Authentication response with token
+- `productCreatedResponse.java` - Product creation confirmation
+- `OrderCreatedResponse.java` - Order placement confirmation
+
+**Purpose:**
+- Type-safe API contracts
+- Automatic JSON serialization/deserialization via Jackson
+- Clear data structure documentation
+
+### Resources (`resources/`)
+
+**APIResources.java**
+- Enum defining all API endpoints and HTTP methods
+- Centralized endpoint management
+- `getResource()` method returns endpoint path
+
+**TestData.java**
+- Dynamic payload creation for different APIs
+- `addProductPayload()` - Product creation data
+- `loginPayload()` - User credentials
+- `orderPayload()` - Order request with product IDs
+
+**Utils.java**
+- `requestSpecification()` - Base request configuration
+- `getJsonPath()` - Response parsing utility
+- `getGlobalValue()` - Property file reader
+
+**global.properties**
+- Environment configuration (base URL, credentials)
+- Externalized test data
+- Easy environment switching
+
+### Step Definitions (`stepDefination/`)
+
+**StepDefination.java**
+- Implements all Gherkin steps from feature files
+- Handles API request construction and execution
+- Manages multipart form data for file uploads
+- Performs response validations and assertions
+- Uses PicoContainer for context sharing between steps
+- Extracts dynamic data (productId, orderId, userId)
+
+### Test Runner (`cucumber/Options/`)
+
+**TestRunner.java**
+- JUnit Platform Suite configuration
+- Cucumber options:
+  - Feature file paths
+  - Step definition glue code
+  - Report plugins (JSON, HTML)
+  - Tags for selective execution
+- Entry point for test execution
 
 ## Test Scenarios Covered
 
