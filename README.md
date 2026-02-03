@@ -18,14 +18,68 @@ End-to-end REST API automation framework for e-commerce application testing, bui
 
 ```
 EcommAPIAutomation/
-├── src/test/java/
-│   ├── featureFiles/      # Cucumber feature files
-│   ├── stepDefination/    # Step definition classes
-│   ├── pojo/              # Request/Response POJOs
-│   ├── resources/         # Reusable utility classes
-│   └── cucumber/          # Test runner configuration
-└── pom.xml
+├── src/
+│   ├── main/
+│   │   ├── java/                          # Main source code (if any)
+│   │   └── resources/                     # Main resources
+│   └── test/
+│       ├── java/
+│       │   ├── cucumber/
+│       │   │   └── Options/
+│       │   │       └── TestRunner.java    # Cucumber test runner configuration
+│       │   ├── featureFiles/
+│       │   │   ├── Login.feature          # Login scenarios (positive/negative)
+│       │   │   └── AddProduct.feature     # E2E product and order workflow
+│       │   ├── pojo/
+│       │   │   ├── Login.java             # Login request POJO
+│       │   │   ├── LoginResponse.java     # Login response POJO
+│       │   │   ├── Orders.java            # Order request POJO
+│       │   │   ├── OrderDetails.java      # Order details object
+│       │   │   ├── OrderCreatedResponse.java  # Order creation response
+│       │   │   └── productCreatedResponse.java # Product creation response
+│       │   ├── resources/
+│       │   │   ├── APIResources.java      # Enum for API endpoints and methods
+│       │   │   ├── TestData.java          # Test data builder for payloads
+│       │   │   ├── Utils.java             # Utility methods for API operations
+│       │   │   └── global.properties      # Configuration (base URL, credentials)
+│       │   └── stepDefination/
+│       │       └── StepDefination.java    # Step definitions for all scenarios
+│       └── resources/                     # Test resources
+├── target/                                # Build output directory
+│   ├── cucumber-reports/                  # HTML test reports
+│   └── jsonReports/                       # JSON format reports
+├── pom.xml                                # Maven dependencies and plugins
+├── .gitattributes                         # Git language detection configuration
+└── README.md                              # Project documentation
 ```
+
+### Key Components
+
+**Feature Files** (`featureFiles/`)
+- `Login.feature` - Authentication testing with data-driven scenarios
+- `AddProduct.feature` - Complete e-commerce workflow with background steps
+
+**POJO Classes** (`pojo/`)
+- Request POJOs: Login, Orders
+- Response POJOs: LoginResponse, productCreatedResponse, OrderCreatedResponse
+- Nested objects: OrderDetails
+- Used for JSON serialization/deserialization
+
+**Resources** (`resources/`)
+- `APIResources.java` - Centralized API endpoint and HTTP method management
+- `TestData.java` - Dynamic payload creation for different APIs
+- `Utils.java` - Reusable methods (API calls, response extraction, validations)
+- `global.properties` - Environment configuration and base URLs
+
+**Step Definitions** (`stepDefination/`)
+- Single comprehensive step definition class
+- Implements all Gherkin steps for login, product, and order operations
+- Handles multipart form data for file uploads
+- Manages context sharing between steps using PicoContainer
+
+**Test Runner** (`cucumber/Options/`)
+- Cucumber configuration with tags and report plugins
+- Defines execution scope and output formats
 
 ## Test Scenarios Covered
 
